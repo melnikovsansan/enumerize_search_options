@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   enumerize :status, in: { active: 0, ban: 1 }, scope: true, search_options: true
 
   def self.status_search_options
-    super << ['Deleted', nil]
+    super + [['Deleted', nil]]
   end
 end
 

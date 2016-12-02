@@ -1,29 +1,46 @@
 # EnumerizeSearchOptions
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/enumerize_search_options`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
+Add ability create `<select>` for search (using [Ransack](https://github.com/activerecord-hackery/ransack)) by enumerize attributes (using [Enumerize](https://github.com/brainspec/enumerize)).
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'enumerize_search_options'
+gem 'enumerize_search_options', git: 'https://github.com/melnikovsansan/enumerize_search_options'
 ```
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install enumerize_search_options
-
 ## Usage
+Just add option `search_options` to `enumerize`.
+```ruby
+class User < ActiveRecord::Base
+  extend Enumerize
 
-TODO: Write usage instructions here
+  enumerize :sex, in: { male: 0, female: 1 }, search_options: true
+end
+```
+and use it
+```ruby
+User.sex_search_options #=> [['Male', 0], ['Female', 1]] 
+```
+You can `except` roles
+```ruby
+enumerize :role, in: { user: 0, admin: 1 }, search_options: { except: :admin }
+...
+User.role_search_options #=>  [['User', 0]]
+```
+Or customize
+```ruby
+enumerize :status, in: { active: 0, ban: 1 }, search_options: true
 
+def self.status_search_options
+  super + [['Deleted', nil]]
+end
+...
+User.status_search_options #=> [['Active', 0], ['Ban', 1], ['Deleted', nil]]
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
