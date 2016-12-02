@@ -1,17 +1,4 @@
-require 'enumerize'
-
-module Enumerize
-  class << self
-
-    def extended_with_search_options(base)
-      extended_without_search_options(base)
-      base.extend SearchOptions
-    end
-
-    alias_method :extended_without_search_options, :extended
-    alias_method :extended, :extended_with_search_options
-  end
-
+module EnumerizeSearchOptions
   module SearchOptions
     def enumerize(name, options={})
       super
