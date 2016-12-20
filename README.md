@@ -6,7 +6,7 @@ Add ability create `<select>` for search (using [Ransack](https://github.com/act
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'enumerize_search_options', git: 'https://github.com/melnikovsansan/enumerize_search_options'
+gem 'enumerize_search_options'
 ```
 
 And then execute:
